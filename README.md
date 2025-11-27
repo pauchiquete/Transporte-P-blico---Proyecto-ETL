@@ -93,7 +93,6 @@ proyecto-transporte/
 ├── dags/
 │   └── transport_etl_dag.py
 ├── data/
-├── logs/
 ├── dashboard/
 │   ├── app.py
 │   └── requirements.txt
