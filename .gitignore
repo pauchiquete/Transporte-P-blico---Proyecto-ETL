@@ -1,0 +1,16 @@
+# Airflow
+logs/
+__pycache__/
+*.pyc
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Datos generados
+data/*.csv
+data/*.parquet
+
+# Sistema
+.DS_Store
+Thumbs.db

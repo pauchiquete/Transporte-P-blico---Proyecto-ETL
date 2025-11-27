@@ -1,0 +1,12 @@
+# Dependencias para el Dashboard Streamlit
+streamlit==1.29.0
+pandas==2.1.3
+numpy==1.26.2
+plotly==5.18.0
+pyarrow==14.0.1
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.23
+
+# Dependencias para Airflow (ya incluidas en la imagen Docker)
+# apache-airflow==2.7.1
+# apache-airflow-providers-postgres==5.7.1
