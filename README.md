@@ -100,14 +100,23 @@ proyecto-transporte/
 └── README.md
 ```
 
+docker-compose ps
 ### Paso 2: Iniciar Airflow con Docker
 
-```bash
-# Crear directorios necesarios
-mkdir -p ./dags ./logs ./plugins ./data ./config
+En Windows (PowerShell), crea las carpetas necesarias y luego levanta los contenedores:
 
-# Configurar permisos (Linux/Mac)
-echo -e "AIRFLOW_UID=$(id -u)" > .env
+```powershell
+# Crear directorios necesarios (PowerShell)
+New-Item -ItemType Directory -Force .\dags, .\logs, .\plugins, .\data, .\config
+
+# En WSL / Linux / macOS usar:
+# mkdir -p ./dags ./logs ./plugins ./data ./config
+
+# (Linux/Mac) Configurar permisos si usas la imagen de Airflow que requiere AIRFLOW_UID
+# echo -e "AIRFLOW_UID=$(id -u)" > .env
+
+# En Windows normalmente puedes omitir AIRFLOW_UID o establecer un valor manualmente:
+# Set-Content -Path .env -Value "AIRFLOW_UID=1000"
 
 # Iniciar servicios
 docker-compose up -d
@@ -125,16 +134,31 @@ docker-compose ps
 
 ### Paso 4: Ejecutar el Dashboard
 
-```bash
+Instrucciones para Windows (PowerShell):
+
+```powershell
+# Entrar al directorio del dashboard
+cd .\dashboard
+
+# Crear y activar un entorno virtual (PowerShell)
+python -m venv venv
+# Ejecutar en PowerShell (si la ejecución de scripts está restringida, usar: powershell -ExecutionPolicy Bypass -File .\venv\Scripts\Activate.ps1)
+.\venv\Scripts\Activate.ps1
+
+# En CMD en lugar de PowerShell:
+# venv\Scripts\activate.bat
+
 # Instalar dependencias
-cd dashboard
 pip install -r requirements.txt
 
-# Ejecutar Streamlit
-streamlit run app.py
+# Ejecutar Streamlit (puerto por defecto 8501; usar 8502 si lo prefieres)
+streamlit run app.py --server.port 8502
+
+# Si prefieres el puerto por defecto:
+# streamlit run app.py
 ```
 
-El dashboard estará disponible en: `http://localhost:8501`
+El dashboard estará disponible en `http://localhost:8502` (o `http://localhost:8501` si usas el puerto por defecto).
 
 ---
 
@@ -374,49 +398,3 @@ docker exec -it <postgres-container-id> psql -U airflow
 ```
 
 ---
-
-## 📝 Cumplimiento de Requisitos
-
-### ✅ Fase 1: Dataset y Justificación
-- [x] Dataset seleccionado: Transporte público (datos sintéticos)
-- [x] Justificación de 1 párrafo completa
-- [x] Problema claramente definido
-- [x] Beneficiarios identificados
-
-### ✅ Fase 2: Pipeline ETL
-- [x] **Extract:** Generador de datos sintéticos
-- [x] **Transform:** Limpieza + Feature engineering
-- [x] **Load:** Postgres + CSV/Parquet
-- [x] **Scheduling:** @daily configurado
-- [x] **Error Handling:** try/except + retries
-- [x] **Scaling:** Parquet + chunks + parallel tasks
-
-### ✅ Fase 3: Dashboard
-- [x] Herramienta: Streamlit
-- [x] 2+ gráficos implementados (5 gráficos)
-- [x] 1+ KPI implementado (4 KPIs)
-- [x] Usa solo datos transformados del ETL
-- [x] Justificación de gráficos incluida
-- [x] Explica cómo resuelve el problema
-
----
-
-## 🚀 Extensiones Futuras
-
-- [ ] Integración con API de transporte real
-- [ ] Modelo de ML para predicción de demanda
-- [ ] Alertas automáticas por email/SMS
-- [ ] Dashboard mobile con geolocalización
-- [ ] Análisis de sentimiento de usuarios
-
----
-
-## 👨‍💻 Autor
-
-Proyecto desarrollado para demostración de pipeline ETL con Apache Airflow
-
----
-
-## 📄 Licencia
-
-Este proyecto es de código abierto para fines educativos.
